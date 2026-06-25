@@ -19,9 +19,6 @@ st.set_page_config(
 
 st.title("🎓 Student Performance Predictor")
 
-st.write(
-    "Predict a student's exam score using Machine Learning."
-)
 
 st.divider()
 
@@ -153,9 +150,11 @@ if st.button("Predict Performance"):
 
     # ---------------- PREDICTION ----------------
 
+    # ---------------- PREDICTION ----------------
+
     prediction = model.predict(input_df)[0]
 
-    prediction = max(0, min(100, prediction))
+    prediction =round(prediction, 2)
 
     # ---------------- OUTPUT ----------------
 
@@ -165,29 +164,27 @@ if st.button("Predict Performance"):
 
     st.metric(
         label="Predicted Exam Score",
-        value=f"{prediction:.2f}"
+        value=f"{prediction}"
     )
 
     if prediction >= 85:
-        st.success(
-            "Performance Level: Excellent 🌟"
-        )
+        st.success("Performance Level: Excellent 🌟")
 
     elif prediction >= 70:
-        st.success(
-            "Performance Level: Good 👍"
-        )
+        st.success("Performance Level: Good 👍")
 
-    elif prediction >= 50:
-        st.warning(
-            "Performance Level: Average 📚"
-        )
+    elif prediction >= 60:
+        st.info("Performance Level: Average 📚")
+
+    elif prediction >= 40:
+        st.warning("Performance Level: Below Average ⚠️")
 
     else:
-        st.error(
-            "Performance Level: Poor ⚠️"
-        )
+        st.error("Performance Level: Poor ❌")
 
+    
+
+    # Accuracy
     st.info(
         "Model Accuracy (R²): 71.2%"
     )
